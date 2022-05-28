@@ -7,15 +7,11 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser');
 const fs = require('fs');
 const multer = require('multer');
-const randomstring = require('randomstring');
 const rootVars = require('./middleware/root-vars.middleware');
 const appRouter = require('./routes');
 
-const password = randomstring.generate(6);
-const username = randomstring.generate({
-  length: 10,
-  charset: 'octal',
-});
+const notfoundHandler = require('./handlers/notfound.handler');
+const errorHandler = require('./handlers/error.handler');
 
 const uploader = multer({ dest: __dirname + '/uploads/' });
 const app = express();
@@ -43,22 +39,6 @@ app
 
 // App routing setup
 app.use('/', appRouter);
-
-// app.get('/', (req, res) => {
-//     res.render('index', { text: 'Hey' })
-// })
-
-// app.get('/index', (req, res) => {
-//     res.render('index', { text: 'Hey' })
-// })
-
-// app.get('/login', (req, res) => {
-//     res.render('login')
-// })
-
-// app.get('/register', (req, res) => {
-//     res.render('register')
-// })
 
 /**
  * Cac ban them description
@@ -190,5 +170,8 @@ app.post('/delete', uploader.single('customFile'), (req, res) => {
 
   return res.json({ code: 0, message: 'Xóa thành công' });
 });
+
+// set up handlers
+app.use(notfoundHandler).use(errorHandler);
 
 module.exports = app;

@@ -1,0 +1,19 @@
+version: '3.8'
+
+services:
+  db:
+    container_name: 'wallet-db'
+    image: mysql:8.0.29
+    environment:
+      - MYSQL_DATABASE=ewallet
+      - MYSQL_ROOT_PASSWORD=123456
+    restart: always
+    ports:
+      - '3306:3306'
+    volumes:
+      - './migration/initdb.sql:/docker-entrypoint-initdb.d/dump.sql'
+  adminer:
+    image: adminer
+    container_name: 'wallet-adminer'
+    ports:
+      - '8080:8080'
