@@ -1,0 +1,54 @@
+<div id="layoutSidenav">
+    <div id="layoutSidenav_nav">
+        <nav class="sb-sidenav accordion sb-sidenav-dark" id="sidenavAccordion">
+            <div class="sb-sidenav-menu">
+                <div class="nav">
+                    <div class="sb-sidenav-menu-heading">Tổng quát</div>
+                    <a class="nav-link" href="./index">
+                        <div class="sb-nav-link-icon"><i class="fas fa-tachometer-alt"></i></div>
+                        Tổng quát
+                    </a>
+                    <div class="sb-sidenav-menu-heading">Thông tin tài khoản</div>
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                        Tài Khoản
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapseLayouts" aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav">
+                            <a class="nav-link" href="./accountbalance">Số dư tài khoản</a>
+                            <a class="nav-link" href="./linkcard">Thẻ liên kết</a>
+                        </nav>
+                    </div>
+
+
+
+                    <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapsePages" aria-expanded="false" aria-controls="collapsePages">
+                        <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
+                        Giao dịch ví điện tử
+                        <div class="sb-sidenav-collapse-arrow"><i class="fas fa-angle-down"></i></div>
+                    </a>
+                    <div class="collapse" id="collapsePages" aria-labelledby="headingTwo" data-bs-parent="#sidenavAccordion">
+                        <nav class="sb-sidenav-menu-nested nav accordion" id="sidenavAccordionPages">
+                            <a class="nav-link" href="./topup">Nạp tiền vào ví</a>
+                            <a class="nav-link" href="./transfer">Chuyển tiền</a>
+                            <a class="nav-link" href="./withdraw">Rút tiền về thẻ</a>
+                        </nav>
+                    </div>
+                    <div class="sb-sidenav-menu-heading">Giao dịch thanh toán</div>
+                    <a class="nav-link" href="./buycard">
+                        <div class="sb-nav-link-icon"><i class="fas fa-chart-area"></i></div>
+                        Mua thẻ điện thoại
+                    </a>
+                    <a class="nav-link" href="./buybusticket">
+                        <div class="sb-nav-link-icon"><i class="fas fa-table"></i></div>
+                        Mua vé xe
+                    </a>
+                </div>
+            </div>
+            <div class="sb-sidenav-footer">
+                <div class="small">Logged in as:</div>
+                Start Bootstrap
+            </div>
+        </nav>
+    </div>
