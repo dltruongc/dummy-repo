@@ -20,6 +20,7 @@ const homeController = {
 };
 
 // entry point
+// http://localhost:8080/
 router.get('/', getDir, homeController.show);
 
 module.exports = router;

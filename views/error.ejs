@@ -231,7 +231,7 @@
         <div class="row">
             <div class="col-md-12 ">
                 <div class="error-text">
-                <h3 class="error">404 Error</h3>
+                <h3 class="error"><%= error.status || 'Oops!' %></h3>
                     <div class="im-sheep">
                         <div class="top">
                             <div class="body"></div>
@@ -249,8 +249,10 @@
                             <div class="im-leg"></div>
                         </div>
                     </div>
-                    <h4>Tiêu đề thông báo lỗi</h4>
-                    <p>Chi tiết thông báo lỗi</p>
+                        <h4><%= error.title || 'Có lỗi xảy ra' %></h4>
+                    <% if (error.message) { %>
+                        <p><%= error.message  %></p>
+                    <% } %>
                 </div>
             </div>
         </div>
