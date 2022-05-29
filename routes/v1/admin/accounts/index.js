@@ -40,4 +40,10 @@ router
   .route('/activation/activated')
   .get(accountManagementController.showActivatedList);
 
+// http://localhost:8080/admin/accounts/activation/{accountId}
+// Xem tất cả thông tin chi tiết của tài khoản
+router
+  .route('/activation/:accountId')
+  .get(accountManagementController.showAccountDetail);
+
 module.exports = router;

@@ -88,3 +88,7 @@ npm run windows:debug
   FormData: username=JesusCook
 
   Xác minh 1 tài khoản (nếu tài khoản đang không trong trạng thái chờ xác minh sẽ báo lỗi)
+
+- GET http://localhost:8080/admin/accounts/{accountId}
+
+  Xem tất cả các thông tin chi tiết của tài khoản
