@@ -12,17 +12,19 @@ const creditCards = [
 /**
  * Kiểm tra thông tin thẻ tồn tại, cvv và ngày hết hạn, hạn mức giao dịch thẻ
  */
-module.exports = function checkCreditCardMiddleware(req, res, next) {
+module.exports = function rechargeCheckCreditCardMiddleware(req, res, next) {
   const { amount, cardnumber, cvv, exp } = req.body;
 
-  const creditCardInfo = creditCards.find((card) => card.id === cardnumber);
+  const creditCardInfo = creditCards.find(
+    (card) => card.cardnumber === cardnumber
+  );
 
   if (!creditCardInfo)
     return next(
       createHttpError(404, 'Không tìm thấy thông tin thẻ tín dụng tương ứng')
     );
 
-  if (creditCardInfo.exp > new Date())
+  if (creditCardInfo.exp < new Date())
     return next(createHttpError(400, 'Thẻ đã hết hạn'));
 
   if (

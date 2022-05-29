@@ -74,6 +74,7 @@ TradingHistory.updateTradeStatus = async (id, status) => {
   message?: string,
   phoneCardCode?: string,
   ticketCode?: string,
+  tradingFee?: string,
  }}
  * @returns {Promise<number>}  insert id
  */
@@ -89,6 +90,7 @@ TradingHistory.create = async ({
   message,
   phoneCardCode,
   ticketCode,
+  tradingFee,
 }) => {
   const sql = `INSERT INTO ${TradingHistory.tableName} SET ? `;
 
@@ -104,9 +106,24 @@ TradingHistory.create = async ({
     message,
     phoneCardCode,
     ticketCode,
+    tradingFee,
   });
 
   return list.insertId;
+};
+
+/**
+ * Đếm số lần rút tiền theo ngày
+ */
+TradingHistory.countWithdrawalByDate = async (date) => {
+  const sql =
+    `SELECT COUNT(id) as count FROM ${TradingHistory.tableName} ` +
+    `WHERE createdAt BETWEEN STR_TO_DATE(?, "%Y-%m-%d") AND (STR_TO_DATE(?, "%Y-%m-%d") + interval 1 day) ` +
+    `AND type=?`;
+
+  const [list] = await conn.promise().query(sql, [date, date, '1']);
+
+  return list[0].count;
 };
 
 module.exports = TradingHistory;

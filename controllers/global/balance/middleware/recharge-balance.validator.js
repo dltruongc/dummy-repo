@@ -12,5 +12,7 @@ module.exports = function rechargeBalanceValidatorMiddleware(req, res, next) {
   if (cardnumber.length !== 6)
     return next(createHttpError(400, 'Thẻ này không được hỗ trợ'));
 
+  req.body.amount = parseInt(amount);
+
   return next();
 };

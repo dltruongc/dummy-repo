@@ -109,3 +109,9 @@ npm run windows:debug
   FormData: amount=2000000&cardnumber=1111111&exp=2022-10-10&cvv=411
 
   Nạp tiền từ thẻ tín dụng vào tài khoản
+
+- POST - http://localhost:8080/me/balance/withdrawal
+
+  FormData: amount=1000000&cardnumber=1111111&exp=2022-10-10&cvv=411&note=RutTienMuaTraSua
+
+  Rút tiền đang có trong ví về thẻ tín dụng
