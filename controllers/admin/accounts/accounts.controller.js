@@ -5,14 +5,16 @@
 const debug = require('debug')('app:controller:account');
 const createError = require('http-errors');
 
-const Account = require('../../../models/AccountStatus');
+const AccountStatus = require('../../../models/AccountStatus');
+const Account = require('../../../models/Account');
+const TradingHistory = require('../../../models/TradingHistory');
 
 // GET - http://localhost:8080/admin/accounts/activation/waiting-activation
 // Danh sách tài khoản đang chờ kích hoạt:
 // tài khoản mới tạo hoặc mới được bổ sung CMND sẽ hiển thị trước.
 module.exports.showWaitingForActivationList = async (req, res, next) => {
   try {
-    const accountsList = await Account.adminQueryByAccountStatus('0');
+    const accountsList = await AccountStatus.adminQueryByAccountStatus('0');
 
     // accountsList = [{"id":1,"username":"Ernest","tel":"01460 1869","accountStatus":"0","loginStatus":"0","message":"hihi","password":"$2b$10","name":"Ernest","email":"Ernest","birth":"2022-05-10T17:00:00.000Z","address":"Ernest","fontid":"Ernest","backid":"Ernest"}]
     return res.json(accountsList);
@@ -29,7 +31,7 @@ module.exports.showWaitingForActivationList = async (req, res, next) => {
 // Danh sách tài khoản đã kích hoạt: sắp xếp giảm dần theo ngày tạo.
 module.exports.showActivatedList = async (req, res, next) => {
   try {
-    const accountsList = await Account.adminQueryByAccountStatus(
+    const accountsList = await AccountStatus.adminQueryByAccountStatus(
       '1',
       'createdAt DESC'
     );
@@ -49,7 +51,7 @@ module.exports.showActivatedList = async (req, res, next) => {
 // Danh sách tài khoản đã bị vô hiệu hóa (do không đồng ý kích hoạt): sắp xếp giảm dần theo ngày tạo.
 module.exports.showDisabledList = async (req, res, next) => {
   try {
-    const accountsList = await Account.adminQueryByAccountStatus(
+    const accountsList = await AccountStatus.adminQueryByAccountStatus(
       '2',
       'createdAt DESC'
     );
@@ -66,7 +68,7 @@ module.exports.showDisabledList = async (req, res, next) => {
 // Danh sách tài khoản đang bị khóa vô thời hạn (do nhập đăng nhập sai nhiều lần): sắp xếp giảm dần theo thời gian bị khóa.
 module.exports.showLockedList = async (req, res, next) => {
   try {
-    const accountsList = await Account.adminQueryByAccountStatus(
+    const accountsList = await AccountStatus.adminQueryByAccountStatus(
       '3',
       'updatedAt DESC'
     );
@@ -79,12 +81,13 @@ module.exports.showLockedList = async (req, res, next) => {
   }
 };
 
+// POST - http://localhost:8080/admin/accounts/activation/active
 // admin xác minh tài khoản
 module.exports.activateAccountByUsername = async (req, res, next) => {
   try {
     const { username } = req.body;
 
-    const accountStatusInfo = await Account.getAccountStatusByUsername(
+    const accountStatusInfo = await AccountStatus.getAccountStatusByUsername(
       username
     );
 
@@ -102,7 +105,7 @@ module.exports.activateAccountByUsername = async (req, res, next) => {
       );
     }
 
-    const updated = await Account.adminUpdateAccountActivationStatus(
+    const updated = await AccountStatus.adminUpdateAccountActivationStatus(
       username,
       '1'
     );
@@ -114,12 +117,13 @@ module.exports.activateAccountByUsername = async (req, res, next) => {
   }
 };
 
+// POST - http://localhost:8080/admin/accounts/activation/unlock
 // admin unlock tài khoản
 module.exports.unlockAccountByUsername = async (req, res, next) => {
   try {
     const { username } = req.body;
 
-    const accountStatusInfo = await Account.getAccountStatusByUsername(
+    const accountStatusInfo = await AccountStatus.getAccountStatusByUsername(
       username
     );
 
@@ -137,7 +141,7 @@ module.exports.unlockAccountByUsername = async (req, res, next) => {
       );
     }
 
-    const updated = await Account.adminUpdateAccountActivationStatus(
+    const updated = await AccountStatus.adminUpdateAccountActivationStatus(
       username,
       '1'
     );
@@ -146,5 +150,79 @@ module.exports.unlockAccountByUsername = async (req, res, next) => {
   } catch (e) {
     debug.extend('unlockAccountByUsername')(e.message);
     return next(422, 'Mở khoá tài khoản thất bại.');
+  }
+};
+
+// GET - http://localhost:8080/admin/accounts/activation/{accountId}
+// xem thông tin chi tiết của tài khoản
+module.exports.showAccountDetail = async (req, res, next) => {
+  try {
+    const { accountId } = req.params;
+
+    const accountInfo = await Account.findById(accountId);
+
+    if (!accountInfo)
+      return next(createError(404, 'Không tìm thấy thông tin tài khoản'));
+
+    const accountStatus = await AccountStatus.getAccountStatusByUsername(
+      accountInfo.username
+    );
+
+    const tradingHistory = await TradingHistory.getTradingListByUsername(
+      accountInfo.username
+    );
+
+    /**
+     *  DATA:
+     *   "accountStatus": {
+     *     "id": 2,
+     *     "username": "Ernest",
+     *     "tel": "01460 1869",
+     *     "accountStatus": "0",
+     *     "loginStatus": "0",
+     *     "message": "hihi",
+     *     "createdAt": "2022-05-28T11:55:05.000Z",
+     *     "updatedAt": "2022-05-28T11:55:05.000Z"
+     *   },
+     *   "account": {
+     *     "id": 1,
+     *     "username": "Ernest",
+     *     "password": "$2b$10",
+     *     "name": "Ernest",
+     *     "email": "Ernest",
+     *     "tel": "01460 1869",
+     *     "birth": "2022-05-10T17:00:00.000Z",
+     *     "address": "Ernest",
+     *     "fontid": "Ernest",
+     *     "backid": "Ernest",
+     *     "createdAt": "2022-05-28T11:55:05.000Z",
+     *     "updatedAt": "2022-05-28T11:55:05.000Z"
+     *   },
+     *   "tradingHistory": [
+     *     {
+     *       "id": 2,
+     *       "username": "Ernest",
+     *       "tel": "01460 1869",
+     *       "type": "0",
+     *       "tradingCode": "01460 1869",
+     *       "quantity": null,
+     *       "amountMoney": 150000,
+     *       "tradingFee": 0,
+     *       "time": "2017-07-28T05:25:38.000Z",
+     *       "status": "-",
+     *       "message": "Nạp tiền từ thẻ vào ví",
+     *       "phoneCardCode": null,
+     *       "ticketCode": null,
+     *       "createdAt": "2022-05-28T22:26:11.000Z",
+     *       "updatedAt": "2022-05-28T22:26:11.000Z"
+     *     }
+     *   ]
+     * }
+     */
+    // return res.render('bla bla', { accountStatus, account: accountInfo, tradingHistory })
+    return res.json({ accountStatus, account: accountInfo, tradingHistory });
+  } catch (e) {
+    debug.extend('showAccountDetail')(e.message);
+    return next(500, 'Không thể thực hiện yêu cầu lúc này!');
   }
 };
