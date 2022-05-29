@@ -60,4 +60,70 @@ TradingHistory.updateTradeStatus = async (id, status) => {
   return list.affectedRows === 1;
 };
 
+/**
+ * Tạo và lưu một record mới
+ * @param {{
+  username: string,
+  type: 0 | 1 | 2 | 3,
+  amountMoney: number,
+  time: string | Date,
+  status: 0 | 1 | 2,
+  tel?: string,
+  tradingCode?: string,
+  quantity?: number,
+  message?: string,
+  phoneCardCode?: string,
+  ticketCode?: string,
+  tradingFee?: string,
+ }}
+ * @returns {Promise<number>}  insert id
+ */
+TradingHistory.create = async ({
+  username,
+  tel,
+  type,
+  tradingCode,
+  quantity,
+  amountMoney,
+  time,
+  status,
+  message,
+  phoneCardCode,
+  ticketCode,
+  tradingFee,
+}) => {
+  const sql = `INSERT INTO ${TradingHistory.tableName} SET ? `;
+
+  const [list] = await conn.promise().query(sql, {
+    username,
+    tel,
+    type,
+    tradingCode,
+    quantity,
+    amountMoney,
+    time,
+    status,
+    message,
+    phoneCardCode,
+    ticketCode,
+    tradingFee,
+  });
+
+  return list.insertId;
+};
+
+/**
+ * Đếm số lần rút tiền theo ngày
+ */
+TradingHistory.countWithdrawalByDate = async (date) => {
+  const sql =
+    `SELECT COUNT(id) as count FROM ${TradingHistory.tableName} ` +
+    `WHERE createdAt BETWEEN STR_TO_DATE(?, "%Y-%m-%d") AND (STR_TO_DATE(?, "%Y-%m-%d") + interval 1 day) ` +
+    `AND type=?`;
+
+  const [list] = await conn.promise().query(sql, [date, date, '1']);
+
+  return list[0].count;
+};
+
 module.exports = TradingHistory;
