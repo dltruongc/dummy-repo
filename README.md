@@ -76,7 +76,6 @@ npm run windows:debug
 
   Danh sách tài khoản đang bị khóa vô thời hạn (do nhập đăng nhập sai nhiều lần): sắp xếp giảm dần theo thời gian bị khóa.
 
-
 - POST http://localhost:8080/admin/accounts/activation/unlock
 
   FormData: username=Hulda
@@ -92,3 +91,15 @@ npm run windows:debug
 - GET http://localhost:8080/admin/accounts/{accountId}
 
   Xem tất cả các thông tin chi tiết của tài khoản
+
+- POST - http://localhost:8080/admin/trades/confirmation/confirm
+
+  FormData: id=2
+
+  admin đồng ý phê duyệt giao dịch (id: id của tradingHistory). Sau khi phê duyệt tiến hành cập nhật số dư trong tài khoản. Nếu tài khoản không đủ số dư hoặc k tìm thấy thông tin số dư thì thao tác thất bại
+
+- POST - http://localhost:8080/admin/trades/confirmation/cancel
+
+  FormData: id=1
+
+  admin KHÔNG đồng ý phê duyệt giao dịch (id: id của tradingHistory)

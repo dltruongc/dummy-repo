@@ -21,7 +21,7 @@ AccountStatus.getAccountStatusByUsername = async function (username) {
  * Danh sách tài khoản theo trạng thái kích hoạt
  * [tài khoản mới tạo hoặc mới được bổ sung CMND sẽ hiển thị trước.]
  *
- * @param {'0' || '1' || '2' || '3'} status 0 là chờ, 1 là đã xác thực, 2 là chờ cập nhật thông tin, 3 là không hợp lệ
+ * @param {'0' | '1' | '2' | '3'} status 0 là chờ, 1 là đã xác thực, 2 là chờ cập nhật thông tin, 3 là không hợp lệ
  * @param {string} orderBy (chỉ sort trên bảng chính accountStatus) EX: "updatedAt DESC"
  */
 AccountStatus.adminQueryByAccountStatus = async function (
@@ -42,7 +42,7 @@ AccountStatus.adminQueryByAccountStatus = async function (
 /**
  * admin cập nhật trạng thái kích hoạt trên 1 tài khoản
  * @param {string} username tên tài khoản được cập nhật
- * @param {'0' || '1' || '2' || '3'} status 0 là chờ, 1 là đã xác thực, 2 là chờ cập nhật thông tin, 3 là không hợp lệ
+ * @param {'0' | '1' | '2' | '3'} status 0 là chờ, 1 là đã xác thực, 2 là chờ cập nhật thông tin, 3 là không hợp lệ
  * @returns {Promise<boolean>}
  */
 AccountStatus.adminUpdateAccountActivationStatus = async function (
