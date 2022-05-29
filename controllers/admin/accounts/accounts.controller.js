@@ -9,9 +9,12 @@ const AccountStatus = require('../../../models/AccountStatus');
 const Account = require('../../../models/Account');
 const TradingHistory = require('../../../models/TradingHistory');
 
-// GET - http://localhost:8080/admin/accounts/activation/waiting-activation
-// Danh sách tài khoản đang chờ kích hoạt:
-// tài khoản mới tạo hoặc mới được bổ sung CMND sẽ hiển thị trước.
+/**
+ * GET - http://localhost:8080/admin/accounts/activation/waiting-activation
+
+ * Danh sách tài khoản đang chờ kích hoạt:
+ * tài khoản mới tạo hoặc mới được bổ sung CMND sẽ hiển thị trước.
+ */
 module.exports.showWaitingForActivationList = async (req, res, next) => {
   try {
     const accountsList = await AccountStatus.adminQueryByAccountStatus('0');
@@ -27,8 +30,11 @@ module.exports.showWaitingForActivationList = async (req, res, next) => {
   }
 };
 
-// GET - http://localhost:8080/admin/accounts/activation/activated
-// Danh sách tài khoản đã kích hoạt: sắp xếp giảm dần theo ngày tạo.
+/**
+ * GET - http://localhost:8080/admin/accounts/activation/activated
+ *
+ * Danh sách tài khoản đã kích hoạt: sắp xếp giảm dần theo ngày tạo.
+ */
 module.exports.showActivatedList = async (req, res, next) => {
   try {
     const accountsList = await AccountStatus.adminQueryByAccountStatus(
@@ -47,8 +53,11 @@ module.exports.showActivatedList = async (req, res, next) => {
   }
 };
 
-// GET - http://localhost:8080/admin/accounts/activation/disabled
-// Danh sách tài khoản đã bị vô hiệu hóa (do không đồng ý kích hoạt): sắp xếp giảm dần theo ngày tạo.
+/**
+ * GET - http://localhost:8080/admin/accounts/activation/disabled
+ *
+ * Danh sách tài khoản đã bị vô hiệu hóa (do không đồng ý kích hoạt): sắp xếp giảm dần theo ngày tạo.
+ */
 module.exports.showDisabledList = async (req, res, next) => {
   try {
     const accountsList = await AccountStatus.adminQueryByAccountStatus(
@@ -64,8 +73,11 @@ module.exports.showDisabledList = async (req, res, next) => {
   }
 };
 
-// GET - http://localhost:8080/admin/accounts/activation/locked
-// Danh sách tài khoản đang bị khóa vô thời hạn (do nhập đăng nhập sai nhiều lần): sắp xếp giảm dần theo thời gian bị khóa.
+/**
+ * GET - http://localhost:8080/admin/accounts/activation/locked
+ *
+ * Danh sách tài khoản đang bị khóa vô thời hạn (do nhập đăng nhập sai nhiều lần): sắp xếp giảm dần theo thời gian bị khóa.
+ */
 module.exports.showLockedList = async (req, res, next) => {
   try {
     const accountsList = await AccountStatus.adminQueryByAccountStatus(
@@ -81,8 +93,11 @@ module.exports.showLockedList = async (req, res, next) => {
   }
 };
 
-// POST - http://localhost:8080/admin/accounts/activation/active
-// admin xác minh tài khoản
+/**
+ * POST - http://localhost:8080/admin/accounts/activation/active
+ *
+ * admin xác minh tài khoản
+ */
 module.exports.activateAccountByUsername = async (req, res, next) => {
   try {
     const { username } = req.body;
@@ -117,8 +132,11 @@ module.exports.activateAccountByUsername = async (req, res, next) => {
   }
 };
 
-// POST - http://localhost:8080/admin/accounts/activation/unlock
-// admin unlock tài khoản
+/**
+ * POST - http://localhost:8080/admin/accounts/activation/unlock
+ *
+ * admin unlock tài khoản
+ */
 module.exports.unlockAccountByUsername = async (req, res, next) => {
   try {
     const { username } = req.body;
@@ -153,8 +171,11 @@ module.exports.unlockAccountByUsername = async (req, res, next) => {
   }
 };
 
-// GET - http://localhost:8080/admin/accounts/activation/{accountId}
-// xem thông tin chi tiết của tài khoản
+/**
+ * GET - http://localhost:8080/admin/accounts/activation/{accountId}
+ *
+ * xem thông tin chi tiết của tài khoản
+ */
 module.exports.showAccountDetail = async (req, res, next) => {
   try {
     const { accountId } = req.params;

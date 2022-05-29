@@ -12,4 +12,12 @@ Account.findById = async (id) => {
   return list[0];
 };
 
+Account.findByUsername = async (username) => {
+  const sql = 'SELECT * FROM account WHERE username=?';
+
+  const [list] = await conn.promise().query(sql, [username]);
+
+  return list[0];
+};
+
 module.exports = Account;
