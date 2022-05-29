@@ -52,6 +52,7 @@ module.exports.showTradingHistoryDetail = async (req, res, next) => {
 };
 
 /** POST - http://localhost:8080/admin/trades/confirmation/confirm
+ *
  * admin đồng ý phê duyệt giao dịch
  * -- status: 0 là thành công, 1 là thất bại, 2 là chờ duyệt
  */

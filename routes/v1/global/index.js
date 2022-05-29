@@ -2,6 +2,8 @@ const express = require('express');
 
 const getDir = require('../../../middleware/getdir.middleware');
 const fileReader = require('../../../fileReader');
+const isLoggedInMiddleware = require('../../../middleware/is-logged-in.middleware');
+const meRouter = require('./me');
 
 const router = express.Router();
 
@@ -22,5 +24,8 @@ const homeController = {
 // entry point
 // http://localhost:8080/
 router.get('/', getDir, homeController.show);
+
+// Chỉ cho phép bản thân người đang đăng nhập truy cập
+router.use('/me', isLoggedInMiddleware, meRouter);
 
 module.exports = router;

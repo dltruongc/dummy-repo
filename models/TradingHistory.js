@@ -60,4 +60,53 @@ TradingHistory.updateTradeStatus = async (id, status) => {
   return list.affectedRows === 1;
 };
 
+/**
+ * Tạo và lưu một record mới
+ * @param {{
+  username: string,
+  type: 0 | 1 | 2 | 3,
+  amountMoney: number,
+  time: string | Date,
+  status: 0 | 1 | 2,
+  tel?: string,
+  tradingCode?: string,
+  quantity?: number,
+  message?: string,
+  phoneCardCode?: string,
+  ticketCode?: string,
+ }}
+ * @returns {Promise<number>}  insert id
+ */
+TradingHistory.create = async ({
+  username,
+  tel,
+  type,
+  tradingCode,
+  quantity,
+  amountMoney,
+  time,
+  status,
+  message,
+  phoneCardCode,
+  ticketCode,
+}) => {
+  const sql = `INSERT INTO ${TradingHistory.tableName} SET ? `;
+
+  const [list] = await conn.promise().query(sql, {
+    username,
+    tel,
+    type,
+    tradingCode,
+    quantity,
+    amountMoney,
+    time,
+    status,
+    message,
+    phoneCardCode,
+    ticketCode,
+  });
+
+  return list.insertId;
+};
+
 module.exports = TradingHistory;
