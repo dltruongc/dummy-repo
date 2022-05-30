@@ -7,8 +7,8 @@
         "test": "echo \"Error: no test specified\" && exit 1",
         "dev": "DEBUG=app:* nodemon index.js",
         "debug": "DEBUG=* node --inspect index.js",
-        "windows:dev": "($env:DEBUG=app:*) -and (nodemon index.js)",
-        "windows:debug": "($env:DEBUG=*) -and (node --inspect index.js)"
+        "windows:dev": "set DEBUG=app:* nodemon index.js",
+        "windows:debug": "set DEBUG=* node --inspect index.js"
     },
     "keywords": [],
     "author": "",
