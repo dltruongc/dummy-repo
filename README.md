@@ -60,6 +60,10 @@ npm run windows:debug
 
 ## Admin (yêu cầu 2.1)
 
+- GET - http://localhost:8080/admin/accounts
+
+  Danh sách tất cả các tài khoản (đã có sắp xếp, phân loại theo trạng thái kích hoạt)
+
 - GET - http://localhost:8080/admin/accounts/activation/waiting-activation
 
   Danh sách tài khoản đang chờ kích hoạt: tài khoản mới tạo hoặc mới được bổ sung CMND sẽ hiển thị trước.

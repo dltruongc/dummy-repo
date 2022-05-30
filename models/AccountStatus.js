@@ -56,4 +56,24 @@ AccountStatus.adminUpdateAccountActivationStatus = async function (
   return list.affectedRows === 1;
 };
 
+/**
+ * Danh sách tài khoản theo trạng thái kích hoạt
+ * [tài khoản mới tạo hoặc mới được bổ sung CMND sẽ hiển thị trước.]
+ *
+ * @param {string} orderBy (chỉ sort trên bảng chính accountStatus) EX: "updatedAt DESC"
+ */
+AccountStatus.adminQueryAllAccounts = async function (
+  orderBy = 'updatedAt DESC'
+) {
+  const sql =
+    'SELECT * FROM accountStatus ' +
+    'JOIN account on account.username = accountStatus.username ' +
+    'ORDER BY accountStatus.' +
+    orderBy;
+
+  const [list] = await conn.promise().query(sql);
+
+  return list;
+};
+
 module.exports = AccountStatus;
