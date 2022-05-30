@@ -4,6 +4,8 @@ const accountManagementController = require('../../../../controllers/admin/accou
 
 const router = express.Router();
 
+router.route('/').get(accountManagementController.showAllAccounts);
+
 // http://localhost:8080/admin/accounts/activation/unlock
 // Unlock tài khoản đang bị khoá.
 router

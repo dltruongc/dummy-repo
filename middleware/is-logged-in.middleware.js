@@ -2,7 +2,15 @@
  * Kiểm tra xem có thông tin đăng nhập hay chưa
  */
 module.exports = function isLoggedInMiddleware(req, res, next) {
-  const user = req.session.user;
+  const user = {
+    id: 1,
+    username: 'Ernest',
+    name: 'Ernest',
+    email: 'dltruong.c@gmail.com',
+    tel: '01460 1869',
+  };
+
+  // const user = req.session.user;
   if (!user || !Object.keys(user).length)
     return next(
       500,

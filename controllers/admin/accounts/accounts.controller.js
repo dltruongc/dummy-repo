@@ -247,3 +247,120 @@ module.exports.showAccountDetail = async (req, res, next) => {
     return next(500, 'Không thể thực hiện yêu cầu lúc này!');
   }
 };
+
+module.exports.showAllAccounts = async (req, res, next) => {
+  try {
+    // danh sách đã bị khoá (lock)
+    const lockedAccounts = await AccountStatus.adminQueryByAccountStatus(
+      '3',
+      'updatedAt DESC'
+    );
+
+    // danh sách đã bị vô hiệu hoá
+    const disabledList = await AccountStatus.adminQueryByAccountStatus(
+      '2',
+      'createdAt DESC'
+    );
+
+    // danh sách đã kích hoạt
+    const activatedList = await AccountStatus.adminQueryByAccountStatus(
+      '1',
+      'createdAt DESC'
+    );
+
+    // danh sách chờ kích hoạt
+    const waitingActivationList = await AccountStatus.adminQueryByAccountStatus(
+      '0'
+    );
+
+    const data = {
+      lockedAccounts,
+      disabledList,
+      activatedList,
+      waitingActivationList,
+    };
+
+    // data: {
+    //   "lockedAccounts": [
+    //     {
+    //       "id": 0,
+    //       "username": "1234567890",
+    //       "tel": "0868084080",
+    //       "accountStatus": "3",
+    //       "loginStatus": "0",
+    //       "message": "",
+    //       "createdAt": "2022-03-28T11:55:05.000Z",
+    //       "updatedAt": "2022-05-28T22:05:30.000Z",
+    //       "password": "$2b$10",
+    //       "name": "Nguyễn Văn Điểm",
+    //       "email": "nguyenvandiem@gmail.com",
+    //       "birth": "2001-01-08T17:00:00.000Z",
+    //       "address": "HCM",
+    //       "fontid": "abc12345",
+    //       "backid": "abc67890"
+    //     }
+    //   ],
+    //   "disabledList": [
+    //     {
+    //       "id": 2,
+    //       "username": "JesusCook",
+    //       "tel": "01384 7919",
+    //       "accountStatus": "2",
+    //       "loginStatus": "0",
+    //       "message": "KUJBRjTYuVerGzqOthqo",
+    //       "createdAt": "2022-05-28T11:55:05.000Z",
+    //       "updatedAt": "2022-05-30T09:14:57.000Z",
+    //       "password": "JesusC",
+    //       "name": "JesusCook",
+    //       "email": "dltruong.h@gmail.com",
+    //       "birth": "2022-05-10T17:00:00.000Z",
+    //       "address": "JesusCook",
+    //       "fontid": "JesusCook",
+    //       "backid": "JesusCook"
+    //     }
+    //   ],
+    //   "activatedList": [
+    //     {
+    //       "id": 3,
+    //       "username": "Hulda",
+    //       "tel": "023 8112 4",
+    //       "accountStatus": "1",
+    //       "loginStatus": "0",
+    //       "message": "ANVHWGcXkrllcNgM",
+    //       "createdAt": "2022-05-28T11:55:05.000Z",
+    //       "updatedAt": "2022-05-28T11:55:05.000Z",
+    //       "password": "Hulda",
+    //       "name": "Hulda",
+    //       "email": "Hulda",
+    //       "birth": "2022-05-10T17:00:00.000Z",
+    //       "address": "Hulda",
+    //       "fontid": "Hulda",
+    //       "backid": "Hulda"
+    //     }
+    //   ],
+    //   "waitingActivationList": [
+    //     {
+    //       "id": 1,
+    //       "username": "Ernest",
+    //       "tel": "01460 1869",
+    //       "accountStatus": "0",
+    //       "loginStatus": "0",
+    //       "message": "hihi",
+    //       "createdAt": "2022-05-28T11:55:05.000Z",
+    //       "updatedAt": "2022-05-28T11:55:05.000Z",
+    //       "password": "$2b$10",
+    //       "name": "Ernest",
+    //       "email": "Ernest",
+    //       "birth": "2022-05-10T17:00:00.000Z",
+    //       "address": "Ernest",
+    //       "fontid": "Ernest",
+    //       "backid": "Ernest"
+    //     }
+    //   ]
+    // }
+    return res.json(data);
+  } catch (e) {
+    debug.extend('showAccountDetail')(e.message);
+    return next(500, 'Không thể thực hiện yêu cầu lúc này!');
+  }
+};

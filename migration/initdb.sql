@@ -100,7 +100,7 @@ INSERT INTO `creditCardInfo` (`id`, `cardnumber`, `exp`, `cvv`) VALUES
 -- Table structure for table `tradingHistory`
 --
 
--- type: 0 là nộp tiền vào ví, 1 là rút tiền, 2 là thanh toán mua card đt, 3 là thanh toán mua vé xe
+-- type: 0 là nộp tiền vào ví, 1 là rút tiền, 2 là thanh toán mua card đt, 3 là thanh toán mua vé xe, 4 là chuyển tiền
 -- status: 0 là thành công, 1 là thất bại, 2 là chờ duyệt
 
 CREATE TABLE `tradingHistory` (
@@ -208,3 +208,11 @@ CREATE TABLE `balance` (
 
 ALTER TABLE `balance` ADD `createdAt` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ;
 ALTER TABLE `balance` ADD `updatedAt` TIMESTAMP ON UPDATE CURRENT_TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP ;
+
+-- receiverUsername: username của người nhận (người được chuyển tiền)
+-- feeBearer: người chịu chi phí (0: người gửi, 1: người nhận)
+
+ALTER TABLE `tradingHistory`
+  ADD `receiverUsername` varchar(10) NULL,
+  ADD `receiverPhone` varchar(10) NULL,
+ADD `feeBearer` int NULL AFTER `receiverUsername`;

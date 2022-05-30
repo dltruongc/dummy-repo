@@ -1,0 +1,12 @@
+POST http://localhost:3000/me/balance/transfers
+Content-Type: application/x-www-form-urlencoded
+
+amountMoney=30000&receiverPhone=01384%207919&feeBearer=0&message=ChoTienMuaTraSuaNe
+
+###
+
+POST http://localhost:3000/me/balance/transfers/confirm
+
+###
+
+POST http://localhost:3000/me/balance/transfers/transfer/DZY4pu
