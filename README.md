@@ -115,3 +115,28 @@ npm run windows:debug
   FormData: amount=1000000&cardnumber=1111111&exp=2022-10-10&cvv=411&note=RutTienMuaTraSua
 
   Rút tiền đang có trong ví về thẻ tín dụng
+
+### Hoạt động chuyển tiền
+
+- (1) GET - http://localhost:8080/me/balance/transfers
+
+  user truy cap page chuyển tiền
+
+- (2) POST - http://localhost:8080/me/balance/transfers
+
+  FormData: amountMoney=100000&receiverPhone=0123456789&feeBearer=0&message
+
+  - feeBearer:
+    - 0: Người gửi là người chịu phí giao dịch (5%)
+    - 1: Người nhận là người chịu phí giao dịch (5%)
+  - user submit form, trả dữ liệu về cho user so khớp và chờ user confirm giao dịch.
+
+- (3) POST - http://localhost:8080/me/balance/transfers/confirm
+
+  user đồng ý giao dịch (confirm), gửi OTP cho user thông qua email
+
+- (4) POST - http://localhost:8080/me/balance/transfers/transfer/{OTP_CODE}
+
+  OTP_CODE: mã OTP được user nhập
+
+  Chuyển tiền giữa các tài khoản (thực hiện chuyển tiền), mã OTP của user nhập cần phải truyền vào
