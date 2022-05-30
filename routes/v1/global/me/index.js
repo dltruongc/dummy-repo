@@ -13,11 +13,14 @@ const router = express.Router();
 router.route('/balance/recharge').post(balanceController.rechargeBalance);
 
 /**
- * http://localhost:8080/me/withdrawal
+ * http://localhost:8080/me/balance/withdrawal
  *
  * Rút tiền đang có trong ví về thẻ tín dụng
  */
-router.route('/balance/withdrawal').post(balanceController.withdrawal);
+router
+  .route('/balance/withdrawal')
+  .get(balanceController.showWithdrawal)
+  .post(balanceController.withdrawal);
 
 /**
  * http://localhost:8080/me/balance/transfers

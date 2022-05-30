@@ -108,6 +108,10 @@ npm run windows:debug
 
   admin KHÔNG đồng ý phê duyệt giao dịch (id: id của tradingHistory)
 
+- GET - http://localhost:8080/me/balance/withdrawal
+
+  Trang giao diện rút tiền
+
 - POST - http://localhost:8080/me/balance/recharge
 
   FormData: amount=2000000&cardnumber=1111111&exp=2022-10-10&cvv=411

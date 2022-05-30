@@ -42,7 +42,10 @@ const rechargeBalanceHandler = async (req, res, next) => {
       tel: req.user.tel,
     });
 
-    return res.json({ message: 'Nạp tiền thành công' });
+    return res.render('success', {
+      message: 'Nạp tiền thành công',
+      back: '/me',
+    });
   } catch (error) {
     debug.extend('rechargeBalanceHandler')(error.message);
     return next(new Error('Nạp tiền thất bại. Vui lòng thử lại sau.'));
@@ -69,6 +72,9 @@ const withdrawalHandler = async (req, res, next) => {
 
     const balanceInfo = await Balance.findByUsername(req.user.username);
 
+    if (!balanceInfo)
+      return next(createHttpError(404, 'Không tìm thấy thông tin số dư'));
+
     if (totalFee > balanceInfo.balance)
       return next(
         createHttpError(400, 'Không đủ tiền trong tài khoản, phí rút 5%')
@@ -88,11 +94,12 @@ const withdrawalHandler = async (req, res, next) => {
 
     await Balance.updateBalanceById(balanceInfo.id, -totalFee);
 
-    return res.json({
+    return res.render('success', {
       message:
         totalFee > 5 * 10e5
           ? 'Thao tác thành công, vui lòng chờ Admin phê duyệt'
           : 'Rút tiền thành công',
+      back: '/me',
     });
   } catch (error) {
     debug.extend('withdrawal')(error.message);
@@ -101,7 +108,7 @@ const withdrawalHandler = async (req, res, next) => {
 };
 
 /**
- * POST - http://localhost:8080/me/withdrawal
+ * POST - http://localhost:8080/me/balance/withdrawal
  *
  * User thực hiện rút số tiền đang có trong ví về thẻ tín dụng
  */
@@ -111,3 +118,12 @@ module.exports.withdrawal = [
   withdrawalLimitPerDateMiddleware,
   withdrawalHandler,
 ];
+
+/**
+ * GET - http://localhost:8080/me/balance/withdrawal
+ *
+ * Hiển thị giao diện rút tiền
+ */
+module.exports.showWithdrawal = (req, res) => {
+  return res.render('balance/withdrawal', { message: 'Hi there' });
+};
