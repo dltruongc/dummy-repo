@@ -2487,8 +2487,6 @@ textarea.form-control-lg {
   -webkit-appearance: none;
      -moz-appearance: none;
           appearance: none;
-  -webkit-print-color-adjust: exact;
-          color-adjust: exact;
 }
 .form-check-input[type=checkbox] {
   border-radius: 0.25em;
@@ -11699,3 +11697,103 @@ body {
   font-size: 0.75rem;
   border-radius: 0.25rem !important;
 }
+
+.total-amount {
+  font-size: 22px;
+  font-weight: 700;
+  color: #383737
+}
+
+.amount-container {
+  background-color: #e9eaeb;
+  padding: 6px;
+  padding-left: 15px;
+  padding-right: 15px;
+  border-radius: 8px
+}
+
+.amount-text {
+  font-size: 20px;
+  font-weight: 700;
+  color: #673AB7
+}
+
+.dollar-sign {
+  font-size: 20px;
+  font-weight: 700;
+  color: #000
+}
+
+.label-text {
+  font-size: 16px;
+  font-weight: 600;
+  color: #b2b2b2
+}
+
+.credit-card-number {
+  width: 100%;
+  z-index: 28;
+  border: 2px solid #ced4da;
+  border-radius: 6px;
+  font-weight: 600
+}
+
+.credit-card-number:focus {
+  box-shadow: none;
+  border: 2px solid #673AB7
+}
+
+.expiry-class {
+  width: 100%;
+  border: 2px solid #ced4da;
+  font-weight: 600;
+  font-size: 12px;
+  height: 48px
+}
+
+.expiry-class:focus {
+  box-shadow: none;
+  border: 2px solid #673AB7
+}
+
+.cvv-class {
+  width: 100%;
+  border: 2px solid #ced4da;
+  font-weight: 600;
+  font-size: 12px;
+  height: 48px
+}
+
+.cvv-class:focus {
+  box-shadow: none;
+  border: 2px solid #673AB7
+}
+
+
+.payment-btn:hover {
+  box-shadow: none;
+  color: #fff
+}
+
+.label-text-cc-number {
+  position: relative;
+  top: 4px;
+  margin-bottom: 4px;
+}
+
+.gradient-custom {
+  background: rgb(156, 150, 150);
+  background: -webkit-linear-gradient(to bottom right, rgb(156, 150, 150), rgb(156, 150, 150));
+  background: linear-gradient(to bottom right, rgb(156, 150, 150), rgb(156, 150, 150))
+  }
+  .card-registration .select-input.form-control[readonly]:not([disabled]) {
+  font-size: 1rem;
+  line-height: 2.15;
+  padding-left: .75em;
+  padding-right: .75em;
+  }
+  .card-registration .select-arrow {
+  top: 13px;
+  }
+
+

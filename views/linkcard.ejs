@@ -9,21 +9,27 @@
         <title>Trang Chủ</title>
         <link href="https://cdn.jsdelivr.net/npm/simple-datatables@latest/dist/style.css" rel="stylesheet" />
         <link href="css/styles.css" rel="stylesheet" type="text/css"/>
+        <link rel="stylesheet" href="../public/css/styles.css" type="text/css">
         <script src="https://use.fontawesome.com/releases/v6.1.0/js/all.js" crossorigin="anonymous"></script>
-        <style>
-            
-        </style>
+
     </head>
-    <body class="sb-nav-fixed">
+    <body class="sb-nav-fixed" style="background-color: #eee">
         <%- include('./header.ejs') %>
         <%- include('./menu.ejs') %>
             <div id="layoutSidenav_content">
                 <main>
-                    <!--code here -->
-
-
-
-
+                    <div class="container mt-5 d-flex justify-content-center">
+                        <div class="p-4" style="margin-top: 16%; width: 60%;border-radius: 35px; background-color: gray;box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)">
+                            <div class="d-flex justify-content-between align-items-center">
+                                <h5 class="total-amount">Thẻ liên kết</h5>
+                            </div>
+                            <div class="pt-4"> <label class="d-flex justify-content-between"> <span class="label-text label-text-cc-number">SỐ THẺ</span></label> <input type="tel" name="credit-number" class="form-control credit-card-number" maxlength="19" placeholder="Card number"> </div>
+                            <div class="d-flex justify-content-between pt-4">
+                                <div> <label><span class="label-text">NGÀY HÉT HẠN</span> </label> <input type="date" name="expiry-date" class="form-control expiry-class" placeholder="MM / YY"> </div>
+                                <div> <label><span class="label-text">CVV</span></label> <input type="tel" name="cvv-number" class="form-control cvv-class" maxlength="4" pattern="\d*"> </div>
+                            </div>
+                        </div>
+                    </div>
                 </main>
                 <%- include('./footer.ejs') %>
             </div>
